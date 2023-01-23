@@ -44,6 +44,6 @@
         "gitRemote": "origin",
         "hideGenerator": true,
         "sort" : ["static-first","visibility"],
-        "name" : "Implementation of the RDF Canonicalization algorithm URDNA2015"
+        "name" : "Testing the Implementation of the RDF Canonicalization algorithm URDNA2015"
     }
 }

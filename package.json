@@ -4,7 +4,7 @@
   "description": "Official testing the rdfjs-c14n package as an external dependency",
   "main": "main.ts",
   "scripts": {
-    "test": "./node_modules/.bin/ts-node main.ts"
+    "main": "NODE_OPTIONS=--no-warnings ./node_modules/.bin/ts-node main.ts"
   },
   "author": "Ivan Herman <ivan@w3.org> (https://www.w3.org/People/Ivan/)",
   "license": "W3C-20150513",
