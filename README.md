@@ -1,5 +1,4 @@
-# rdfjs-c14n Tester
-Testing [rdfjs-c14n](https://github.com/iherman/rdfjs-c14n)
+# Testing [rdfjs-c14n](https://github.com/iherman/rdfjs-c14n)
 
 [rdfjs-c14n](https://github.com/iherman/rdfjs-c14n) is an implementation (under development) of the [RDF Dataset Canonicalization](https://www.w3.org/TR/rdf-canon/) algorithm. (The algorithm is being specified by the W3C [RDF Dataset Canonicalization and Hash Working Group](https://www.w3.org/groups/wg/rch)). This repository is to become an "official" test for the algorithm, eventually relying on the testing methodology the WG will adopt in due time. The test material (test manifest and the tests themselves) are directly fetched from the [official repository](https://github.com/w3c/rdf-canon/) of the specification.
 
