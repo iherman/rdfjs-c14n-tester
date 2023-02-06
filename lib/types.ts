@@ -27,6 +27,16 @@ export namespace Constants {
      * run.
      */
     export const ID_PREFIX     = "manifest-urdna2015#test";
+
+    /**
+     * Relative file name of the EARL report preamble
+     */
+    export const EARL_PREAMBLE = "./lib/earl.ttl";
+
+    /**
+     * Relative file name of the final EARL report
+     */
+    export const EARL_REPORT = "./rdfjs-c14n-report.ttl";
 }
 
 /**

@@ -4,8 +4,9 @@
  * @packageDocumentation
  */
 import * as utils                                   from './lib/utils';
-import { RDFCanon, YamlLogger, LogLevels, Logger }  from 'rdfjs-c14n';
 import { TestEntry, TestResult, Constants }         from './lib/types';
+import { createEarlReport }                         from './lib/earl';
+import { RDFCanon, YamlLogger, LogLevels, Logger }  from 'rdfjs-c14n';
 import { Command }                                  from 'commander';
 
 
@@ -19,6 +20,7 @@ import { Command }                                  from 'commander';
  * 
  * Options:
  *   -f --full             Run the full tests suite, returns the list of fails (if any)
+ *   -e --earl             Run the full tests suite and produce an EARL report file
  *   -n --number [number]  Test number
  *   -d --debug            Display all log
  *   -t --trace            Display trace log
@@ -58,6 +60,7 @@ async function main(): Promise<void> {
         .description('Run either a specific test from the test suite or the full test suite')
         .usage('[options]')
         .option('-f --full', 'Run the full tests suite, just return the list of fails')
+        .option('-e --earl', 'Run the full tests suite and produce an EARL report file')
         .option('-n --number [number]', 'Test number')
         .option('-d --debug', 'Display all log')
         .option('-t --trace', 'Display trace and debug log')
@@ -69,7 +72,7 @@ async function main(): Promise<void> {
     
     // "full" means that all the tests must be performed. Otherwise a single test is run with, possibly,
     // a detailed log.
-    if (options.full) {
+    if (options.full || options.earl) {
         const promises: Promise<TestResult>[] = tests.map((t: TestEntry): Promise<TestResult> => utils.singleTest(t,canonicalizer));
         // This is a potentially problematic step in case one of the test 'fetch' leads to an exception. That can happen
         // if the manifest is faulty and refers to a non-existing tests, or one of the tests is unreachable. At some
@@ -79,14 +82,20 @@ async function main(): Promise<void> {
         // reason for handling the exception better...
         const results: TestResult[] = await Promise.all(promises);
 
-        // In an ideal case, this array is empty :-)
-        const errors: TestResult[] = results.filter((t: TestResult): boolean => !t.pass);
+        if (options.earl) {
+            await createEarlReport(results);
+        }
 
-        if (errors.length === 0) {
-            console.log("All tests pass.");
-        } else {
-            const faulty_tests: string[] = errors.map((t: TestResult): string => t.id);
-            console.log(`Failed tests: ${faulty_tests}`);
+        if (options.full) {
+            // In an ideal case, this array is empty :-)
+            const errors: TestResult[] = results.filter((t: TestResult): boolean => !t.pass);
+
+            if (errors.length === 0) {
+                console.log("All tests pass.");
+            } else {
+                const faulty_tests: string[] = errors.map((t: TestResult): string => t.id);
+                console.log(`Failed tests: ${faulty_tests}`);
+            }
         }
     } else {
         const num = (program.args.length === 0) ? testNumber(options.number) : testNumber(program.args[0]);
