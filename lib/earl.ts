@@ -9,12 +9,12 @@ const createEarlEntry = (result: TestResult): string => {
 [ 
     a earl:Assertion ;
     earl:assertedBy <https://www.ivan-herman.net/foaf#me> ;
-    earl:subject <https://github.com/iherman/rdfjs-c14n> ;
-    earl:test <https://w3c.github.io/rdf-canon/tests/${result.id}> ;
+    earl:subject    <https://iherman.github.io/rdfjs-c14n/> ;
+    earl:test       <https://w3c.github.io/rdf-canon/tests/${result.id}> ;
     earl:result [
         a earl:TestResult ;
         earl:outcome ${result.pass ? "earl:passed" : "earl:failed" } ;
-        dc:date "${today.toISOString()}"^^xsd:dateTime
+        dc:date      "${today.toISOString()}"^^xsd:dateTime
     ]
     earl:mode earl:automatic
 ] .`
