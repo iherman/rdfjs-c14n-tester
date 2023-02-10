@@ -106,3 +106,5 @@ dist
 .vscode/
 Attic/
 Notes.md
+
+.gitignore
