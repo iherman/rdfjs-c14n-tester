@@ -37,6 +37,11 @@ export namespace Constants {
      * Relative file name of the final EARL report
      */
     export const EARL_REPORT = "./rdfjs-c14n-report.ttl";
+
+    /**
+     * URL of the project's Package.json file
+     */
+    export const PACKAGE_FILE = "https://raw.githubusercontent.com/iherman/rdfjs-c14n/main/package.json";
 }
 
 /**

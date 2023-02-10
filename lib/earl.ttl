@@ -7,13 +7,17 @@
 @prefix ex:   <http://example.org/> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
+<> foaf:primaryTopic <https://github.com/iherman/rdfjs-c14n> ;
+  dc:issued "$$ISODATE$$"^^xsd:dateTime ;
+  foaf:maker <https://www.ivan-herman.net/foaf#me> .
+
 <https://github.com/iherman/rdfjs-c14n> a doap:Project ;
-  doap:name          "rdfjs-c14n" ;
+  doap:name          "$$PR_NAME$$" ;
   doap:homepage      <https://github.com/iherman/rdfjs-c14n> ;
   doap:license       <https://www.w3.org/Consortium/Legal/copyright-software> ;
   doap:shortdesc     "RDF Canonicalization in TypeScript."@en ;
-  doap:description   "RDF Canonicalization in TypeScript, relying on RDF/JS Data model specification."@en ;
-  doap:created       "2023-01-13"^^xsd:date;
+  doap:description   "$$DESCRIPTION$$"@en ;
+  doap:created       "2023-01-05"^^xsd:date ;
   doap:programming-language "TypeScript" ;
   doap:implements    <https://www.w3.org/TR/rdf-canon/> ;
   doap:category      <http://dbpedia.org/resource/Resource_Description_Framework>,
@@ -27,27 +31,12 @@
   dc:creator         <https://www.ivan-herman.net/foaf#me> .
 
 <https://github.com/iherman/rdfjs-c14n> doap:release [
-  doap:name "rdfjs-c14n";
-  doap:revision "1.0.3";
-  doap:created "2023-01-13"^^xsd:date;
+  doap:name "$$REL_NAME$$";
+  doap:revision "$$VERSION$$";
+  doap:created "$$DATE$$"^^xsd:date ;
 ] .
-
-<> foaf:primaryTopic <https://github.com/iherman/rdfjs-c14n> ;
-  dc:issued "2023-01-13T00:00:00+01:00"^^xsd:dateTime ;
-  foaf:maker <https://www.ivan-herman.net/foaf#me> .
 
 <https://www.ivan-herman.net/foaf#me> a foaf:Person, earl:Assertor;
   foaf:name "Ivan Herman";
   foaf:title "Implementor";
   foaf:homepage <https://www.ivan-herman.net/>, <https://www.w3.org/People/Ivan/> .
-
-
-[ a earl:Assertion;
-  earl:assertedBy <https://www.ivan-herman.net/foaf#me>;
-  earl:subject <https://github.com/iherman/rdfjs-c14n>;
-  earl:test <https://w3c.github.io/rdf-canon/tests/manifest-urdna2015#test001>;
-  earl:result [
-    a earl:TestResult;
-    earl:outcome earl:passed;
-    dc:date "2023-01-25T15:03:17-08:00"^^xsd:dateTime];
-  earl:mode earl:automatic ] .

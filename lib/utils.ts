@@ -16,6 +16,17 @@ import * as rdfn3                                  from './rdfn3';
 
 
 /**
+ * As its name says: fetch a JSON file and convert it into a 
+ * @param fname 
+ * @returns 
+ */
+export async function fetchJson(fname: string): Promise<any> {
+    const f = await fetch(fname);
+    return f.json();
+}
+
+
+/**
  * Get the list of all tests, which is an array in the manifest file. The manifest 
  * itself is fetched from the github repository. The necessary URL fragments are separated in 
  * the `./types` module.
@@ -25,12 +36,7 @@ import * as rdfn3                                  from './rdfn3';
  * @returns 
  */
 export async function getTestList(manifest_name: string): Promise<TestEntry[]> {
-    const fetch_json = async (fname: string): Promise<string> => {
-        const manif = await fetch(fname);
-        return manif.json();           
-    };
-
-    const manifest: any = await fetch_json(`${Constants.TEST_DIR}${manifest_name}`);
+    const manifest: any = await fetchJson(`${Constants.TEST_DIR}${manifest_name}`);
     return manifest["entries"] as TestEntry[];
 }
 
