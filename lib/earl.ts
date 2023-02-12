@@ -15,7 +15,7 @@ const createEarlEntry = (result: TestResult): string => {
         a earl:TestResult ;
         earl:outcome ${result.pass ? "earl:passed" : "earl:failed" } ;
         dc:date      "${today.toISOString()}"^^xsd:dateTime
-    ]
+    ];
     earl:mode earl:automatic
 ] .`
 }

@@ -7,7 +7,7 @@
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 <> foaf:primaryTopic <https://iherman.github.io/rdfjs-c14n/> ;
-  dc:issued  "2023-02-11T08:45:28.357Z"^^xsd:dateTime ;
+  dc:issued  "2023-02-12T11:44:18.563Z"^^xsd:dateTime ;
   foaf:maker <https://www.ivan-herman.net/foaf#me> .
 
 <https://iherman.github.io/rdfjs-c14n/> a doap:Project ;
@@ -53,8 +53,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -66,8 +66,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -79,8 +79,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -92,8 +92,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -105,8 +105,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -118,8 +118,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -131,8 +131,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -144,8 +144,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -157,8 +157,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -170,8 +170,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -183,8 +183,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -196,8 +196,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -209,8 +209,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -222,8 +222,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -235,8 +235,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -248,8 +248,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -261,8 +261,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -274,8 +274,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -287,8 +287,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -300,8 +300,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -313,8 +313,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -326,8 +326,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -339,8 +339,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -352,8 +352,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -365,8 +365,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -378,8 +378,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -391,8 +391,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -404,8 +404,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -417,8 +417,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -430,8 +430,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -443,8 +443,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -456,8 +456,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -469,8 +469,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -482,8 +482,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -495,8 +495,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -508,8 +508,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -521,8 +521,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -534,8 +534,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -547,8 +547,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -560,8 +560,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -573,8 +573,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -586,8 +586,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -599,8 +599,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -612,8 +612,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -625,8 +625,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -638,8 +638,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -651,8 +651,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -664,8 +664,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -677,8 +677,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -690,8 +690,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -703,8 +703,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -716,8 +716,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -729,8 +729,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -742,8 +742,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -755,8 +755,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -768,8 +768,8 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
 
@@ -781,7 +781,7 @@
     earl:result [
         a earl:TestResult ;
         earl:outcome earl:passed ;
-        dc:date      "2023-02-11T08:45:28.357Z"^^xsd:dateTime
-    ]
+        dc:date      "2023-02-12T11:44:18.563Z"^^xsd:dateTime
+    ];
     earl:mode earl:automatic
 ] .
