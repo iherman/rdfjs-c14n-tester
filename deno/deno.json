@@ -1,0 +1,11 @@
+{
+    "name": "rdfjs-c14n-tester — Deno version",
+    "version": "1.0.1",
+    "description": "Official testing the rdfjs-c14n package as an external dependency — deno version",  
+    "main": "main.ts",
+    "author": "Ivan Herman <ivan@w3.org> (https://www.w3.org/People/Ivan/)",
+    "license": "W3C-20150513",
+    "tasks" : {
+        "main": "deno run --allow-net --allow-read --allow-write --allow-env main.ts"
+    }
+}

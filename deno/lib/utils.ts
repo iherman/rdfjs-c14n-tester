@@ -10,9 +10,10 @@
  * @packageDocumentation
  */
 
-import { Graph, Constants, TestEntry, TestResult, Json } from './types';
-import { RDFCanon }                                      from 'rdfjs-c14n';
-import * as rdfn3                                        from './rdfn3';
+// @deno-types="npm:@types/node"
+import { Graph, Constants, TestEntry, TestResult, Json } from './types.ts';
+import { RDFCanon }                                from 'npm:rdfjs-c14n';
+import * as rdfn3                                  from './rdfn3.ts';
 
 
 /**

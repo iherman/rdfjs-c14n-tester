@@ -1,8 +1,10 @@
-import { TestResult, Constants, Json } from './types';
-import { fetchJson } from './utils';
+// @deno-types="npm:@types/node"
+import { TestResult, Constants, Json } from './types.ts';
+import { fetchJson } from './utils.ts';
 import { promises as fs } from 'node:fs';
 
 const today = new Date();
+
 
 const createEarlEntry = (result: TestResult): string => {
     return `
@@ -24,7 +26,7 @@ const getPreamble = async () : Promise<string> => {
     const project_info: Json = await fetchJson(Constants.PACKAGE_FILE);
     const preamble = await fs.readFile(Constants.EARL_PREAMBLE,"utf-8");
     return preamble
-                .replace("$$ISODATE$$", today.toISOString())
+                .replace("$$ISODATE$$", today.toISOString() as string)
                 .replace("$$PR_NAME$$", project_info["name"] as string)
                 .replace("$$REL_NAME$$", project_info["name"] as string)
                 .replace("$$VERSION$$", project_info["version"] as string)
@@ -48,7 +50,7 @@ export async function createEarlReport(results: TestResult[]): Promise<void> {
     const earl_reports = results.map(createEarlEntry);
 
     // Get hold of the report preamble
-    let preamble = await getPreamble();
+    const preamble = await getPreamble();
 
     // Final earl report: preamble, concatenated with the individual reports and all in one string
     const report = [preamble, ...earl_reports].join('\n');
@@ -56,3 +58,5 @@ export async function createEarlReport(results: TestResult[]): Promise<void> {
     // Store the report
     return fs.writeFile(Constants.EARL_REPORT, report);
 }
+
+

@@ -1,12 +1,13 @@
+// deno-lint-ignore-file no-namespace
 /**
  * Type and constant specifications for the tester.
  * 
  * @packageDocumentation
  */
+// @deno-types="npm:@types/rdf-js"
+import * as rdf      from 'npm:rdf-js';
 
-import * as rdf      from 'rdf-js';
-
-export type Json = Record<string, unknown> ;
+export type Json = Record<string, unknown>;
 
 export namespace Constants {
     /** 

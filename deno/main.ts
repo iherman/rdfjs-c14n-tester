@@ -3,12 +3,13 @@
  * 
  * @packageDocumentation
  */
-import * as utils                                   from './lib/utils';
-import { TestEntry, TestResult, Constants }         from './lib/types';
-import { createEarlReport }                         from './lib/earl';
-import { RDFCanon, YamlLogger, LogLevels, Logger }  from 'rdfjs-c14n';
-import { Command }                                  from 'commander';
-// import { process }                                  from 'node:process';
+// @deno-types="npm:@types/node"
+import * as utils                                   from './lib/utils.ts';
+import { TestEntry, TestResult, Constants }         from './lib/types.ts';
+import { createEarlReport }                         from './lib/earl.ts';
+import { RDFCanon, YamlLogger, LogLevels, Logger }  from 'npm:rdfjs-c14n';
+import { Command }                                  from 'npm:commander';
+import { process }                                  from 'node:process';
 
 
 /**
