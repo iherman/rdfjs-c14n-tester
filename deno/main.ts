@@ -82,7 +82,18 @@ async function main(): Promise<void> {
         //
         // Also, exceptions may be raised here if the canonicalization program itself raises an exception. All the more
         // reason for handling the exception better...
-        const results: TestResult[] = await Promise.all(promises);
+        // const results: TestResult[] = await Promise.all(promises);
+
+        const results: TestResult[] = [];
+        const single_test_issues: string[] = []
+
+        for (const p_result of await Promise.allSettled(promises)) {
+            if (p_result.status === "fulfilled") {
+                results.push(p_result.value)
+            } else {
+                single_test_issues.push(p_result.reason);
+            }
+        }
 
         if (options.earl) {
             await createEarlReport(results);
@@ -98,6 +109,10 @@ async function main(): Promise<void> {
                 const faulty_tests: string[] = errors.map((t: TestResult): string => t.id);
                 console.log(`Failed tests: ${faulty_tests}`);
             }
+        }
+
+        if (single_test_issues.length > 0) {
+            console.error(`Handling some tests lead to exceptions:\n${single_test_issues.join('\n')}`);
         }
     } else {
         const num = (program.args.length === 0) ? testNumber(options.number) : testNumber(program.args[0]);
