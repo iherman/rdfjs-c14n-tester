@@ -70,11 +70,29 @@ export async function singleTest(test: TestEntry, canonicalizer: RDFCanon): Prom
             return nqp.text();           
         };
     
-        const [input, expected] = await Promise.all([
+        const [p_input, p_expected] = await Promise.allSettled([
             fetch_text(`${Constants.TEST_DIR}${test.action}`),
             fetch_text(`${Constants.TEST_DIR}${test.result}`)
         ]);
-        return {input, expected}
+
+        const errors: string[] = [];
+
+        if (p_input.status === "rejected") {
+            errors.push("test graph data could not be read")
+        } else if (p_expected.status === "rejected") {
+            errors.push("expected graph data could not read")
+        }
+
+        if (errors.length > 0) {
+            throw( errors.join("; "));
+        } else {
+            // Strictly speaking the test for status is unnecessary, but
+            // tsc (or lint) complains...
+            return {
+                input    : p_input.status    === "fulfilled" ? p_input.value    : '', 
+                expected : p_expected.status === "fulfilled" ? p_expected.value : ''
+            }
+        }
     };
 
     // Compare to arrays of nquads line by line and in order...
@@ -91,23 +109,27 @@ export async function singleTest(test: TestEntry, canonicalizer: RDFCanon): Prom
         }    
     };
 
-    // Get the test and the expected result from the test entry;
-    // the returned values are strings of nquads.
-    const { input, expected } = await getTestPair(test);
+    try {
+        // Get the test and the expected result from the test entry;
+        // the returned values are strings of nquads.
+        const { input, expected } = await getTestPair(test);
 
-    // Get the three graphs in 'real' graph including the canonicalized one.
-    const input_graph: Graph    = rdfn3.getQuads(input);
-    const expected_graph: Graph = rdfn3.getQuads(expected);
-    const c14n_graph: Graph     = canonicalizer.canonicalize(input_graph) as Graph;
+        // Get the three graphs in 'real' graph including the canonicalized one.
+        const input_graph: Graph    = rdfn3.getQuads(input);
+        const expected_graph: Graph = rdfn3.getQuads(expected);
+        const c14n_graph: Graph     = canonicalizer.canonicalize(input_graph) as Graph;
 
-    // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
-    const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
-    const expected_nquads: string[] = rdfn3.graphToOrderedNquads(expected_graph);
-    const c14n_nquads: string[]     = rdfn3.graphToOrderedNquads(c14n_graph);
+        // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
+        const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
+        const expected_nquads: string[] = rdfn3.graphToOrderedNquads(expected_graph);
+        const c14n_nquads: string[]     = rdfn3.graphToOrderedNquads(c14n_graph);
 
-    return {
-        id : test.id,
-        input_nquads, c14n_nquads, expected_nquads,
-        pass: compareNquads(c14n_nquads, expected_nquads)
-    };
+        return {
+            id : test.id,
+            input_nquads, c14n_nquads, expected_nquads,
+            pass: compareNquads(c14n_nquads, expected_nquads)
+        };
+    } catch(error) {
+        throw (`${test.id}: ${error}`)
+    }
 }
