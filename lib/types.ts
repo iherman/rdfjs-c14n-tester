@@ -4,7 +4,7 @@
  * @packageDocumentation
  */
 
-import * as rdf      from 'rdf-js';
+import * as rdf from 'rdf-js';
 
 export type Json = Record<string, unknown> ;
 
