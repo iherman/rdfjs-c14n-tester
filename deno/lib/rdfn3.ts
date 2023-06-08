@@ -9,7 +9,7 @@
 import * as n3    from 'npm:n3';
 import * as rdf   from 'npm:rdf-js';
 import { nquads } from 'npm:@tpluscode/rdf-string';
-import { Graph }  from './types.ts';
+import { Graph }  from './types';
 
 
 /**

@@ -3,11 +3,11 @@
  * 
  * @packageDocumentation
  */
-import * as utils                                   from './lib/utils';
-import { TestEntry, TestResult, Constants }         from './lib/types';
-import { createEarlReport }                         from './lib/earl';
-import { RDFCanon, YamlLogger, LogLevels, Logger }  from 'rdfjs-c14n';
-import { Command }                                  from 'commander';
+import * as utils                                 from './lib/utils';
+import { TestEntry, TestResult, Constants }       from './lib/types';
+import { createEarlReport }                       from './lib/earl';
+import { RDFC10, YamlLogger, LogLevels, Logger }  from 'rdfjs-c14n';
+import { Command }                                from 'commander';
 // import { process }                                  from 'node:process';
 
 
@@ -49,7 +49,7 @@ async function main(): Promise<void> {
     };
 
     // This is thing we are testing...
-    const canonicalizer = new RDFCanon();
+    const canonicalizer = new RDFC10();
 
     // Grab the list of official test references from the github repository, via the test manifest.
     const tests:  TestEntry[] = await utils.getTestList(Constants.MANIFEST_NAME);

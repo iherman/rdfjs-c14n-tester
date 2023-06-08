@@ -1,6 +1,6 @@
 // @deno-types="npm:@types/node"
-import { TestResult, Constants, Json } from './types.ts';
-import { fetchJson } from './utils.ts';
+import { TestResult, Constants, Json } from './types';
+import { fetchJson } from './utils';
 import { promises as fs } from 'node:fs';
 
 const today = new Date();
