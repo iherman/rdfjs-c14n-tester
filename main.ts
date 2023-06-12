@@ -3,11 +3,11 @@
  * 
  * @packageDocumentation
  */
-import * as utils                                 from './lib/utils';
-import { TestEntry, TestResult, Constants }       from './lib/types';
-import { createEarlReport }                       from './lib/earl';
-import { RDFC10, YamlLogger, LogLevels, Logger }  from 'rdfjs-c14n';
-import { Command }                                from 'commander';
+import * as utils                           from './lib/utils';
+import { TestEntry, TestResult, Constants } from './lib/types';
+import { createEarlReport }                 from './lib/earl';
+import { RDFC10, LogLevels, Logger }        from 'rdfjs-c14n';
+import { Command }                          from 'commander';
 // import { process }                                  from 'node:process';
 
 
@@ -49,7 +49,7 @@ async function main(): Promise<void> {
     };
 
     // This is thing we are testing...
-    const canonicalizer = new RDFC10();
+    const rdfc10 = new RDFC10();
 
     // Grab the list of official test references from the github repository, via the test manifest.
     const tests:  TestEntry[] = await utils.getTestList(Constants.MANIFEST_NAME);
@@ -74,7 +74,7 @@ async function main(): Promise<void> {
     // "full" means that all the tests must be performed. Otherwise a single test is run with, possibly,
     // a detailed log.
     if (options.full || options.earl) {
-        const promises: Promise<TestResult>[] = tests.map((t: TestEntry): Promise<TestResult> => utils.singleTest(t,canonicalizer));
+        const promises: Promise<TestResult>[] = tests.map((t: TestEntry): Promise<TestResult> => utils.singleTest(t,rdfc10));
         // This is a potentially problematic step in case one of the test 'fetch' leads to an exception. That can happen
         // if the manifest is faulty and refers to a non-existing tests, or one of the tests is unreachable. At some
         // point is may be worth making the testing more robust in this respect.
@@ -130,12 +130,11 @@ async function main(): Promise<void> {
             const logLevel = (debug) ? LogLevels.debug : ((trace) ? LogLevels.info : undefined);
 
             if (logLevel) {
-                logger = new YamlLogger(logLevel);
-                canonicalizer.setLogger(logger);
+                logger = rdfc10.setLogger("YamlLogger", logLevel)
             }
 
             // The real action for canonicalization (which may also raise some exceptions)
-            const result: TestResult  = await utils.singleTest(the_test, canonicalizer);
+            const result: TestResult  = await utils.singleTest(the_test, rdfc10);
 
             // For now, just display the results. This may change later, if the
             // exact reporting format will be settled.
