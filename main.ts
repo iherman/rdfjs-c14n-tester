@@ -121,7 +121,7 @@ async function main(): Promise<void> {
                         return entry;
                     }
                 }
-                throw("Wrong test number number...");
+                throw("Wrong test number...");
             };
             const the_test = locateTestEntry(num,tests);
 
@@ -146,7 +146,8 @@ async function main(): Promise<void> {
             }
 
         } catch(error) {
-            console.error(`Something went wrong: ${error.message}`);
+            // console.error(error)
+            console.error(`Something went wrong: ${error}`);
         }
     }
 }
