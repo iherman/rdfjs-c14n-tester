@@ -6,7 +6,5 @@ Having this as a separate repository makes it also possible to test `rdfjs-c14n`
 
 (Note, however, that at this point the `package.json` file in the package relies on the local linkage to the `rdfjs-c14n` module rather than importing from `npm`. When the project gets to a final equilibrium point, the package file will be modified. In the meantime, users of this module must modify the `package.json` file by putting a reference to `rdfjs-c14n` manually.)
 
-Note: the "core" library and program has been developed using Typescript on top of node.js and npm. For the fun of it, I created a version that runs with [deno](deno.land) in the directory `deno`. Alas!, there are some subtle differences between a Typescript on top of node.js+npm and deno (e.g., the usage of the `.ts` suffix for importing other modules, the usage of the `npm:` specifier for the import of npm packages) so the same code cannot be reused. But it is almost the same code nevertheless.
-
 ---
 Maintainer: [@iherman](https://github.com/iherman)

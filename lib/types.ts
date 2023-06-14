@@ -4,7 +4,7 @@
  * @packageDocumentation
  */
 
-import * as rdf      from 'rdf-js';
+import * as rdf from 'rdf-js';
 
 export type Json = Record<string, unknown> ;
 
@@ -22,13 +22,13 @@ export namespace Constants {
      * and the only key in the JSON file that is of importance is `entries` that contains an array of
      * {@link TestEntry} instances.
      */
-    export const MANIFEST_NAME = "manifest-urdna2015.jsonld";
+    export const MANIFEST_NAME = "manifest-rdfc10.jsonld";
 
     /**
      * Pattern used to identify individual tests in the manifest; used when individual tests are 
      * run.
      */
-    export const ID_PREFIX     = "manifest-urdna2015#test";
+    export const ID_PREFIX     = "manifest-rdfc10#test";
 
     /**
      * Relative file name of the EARL report preamble

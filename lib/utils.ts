@@ -11,7 +11,7 @@
  */
 
 import { Graph, Constants, TestEntry, TestResult, Json } from './types';
-import { RDFCanon }                                      from 'rdfjs-c14n';
+import { RDFC10 }                                        from 'rdfjs-c14n';
 import * as rdfn3                                        from './rdfn3';
 
 
@@ -52,7 +52,7 @@ export async function getTestList(manifest_name: string): Promise<TestEntry[]> {
  * @param canonicalizer 
  * @returns 
  */
-export async function singleTest(test: TestEntry, canonicalizer: RDFCanon): Promise<TestResult> {
+export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
     interface TestPair {
         input    : string,
         expected : string,
@@ -117,7 +117,7 @@ export async function singleTest(test: TestEntry, canonicalizer: RDFCanon): Prom
         // Get the three graphs in 'real' graph including the canonicalized one.
         const input_graph: Graph    = rdfn3.getQuads(input);
         const expected_graph: Graph = rdfn3.getQuads(expected);
-        const c14n_graph: Graph     = canonicalizer.canonicalize(input_graph) as Graph;
+        const c14n_graph: Graph     = canonicalizer.canonicalizeDetailed(input_graph).dataset as Graph;
 
         // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
         const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
