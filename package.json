@@ -1,6 +1,6 @@
 {
   "name": "rdfjs-c14n-tester",
-  "version": "1.0.1",
+  "version": "2.0.1",
   "description": "Official testing the rdfjs-c14n package as an external dependency",
   "main": "main.ts",
   "scripts": {

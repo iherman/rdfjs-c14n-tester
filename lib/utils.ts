@@ -117,7 +117,7 @@ export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promis
         // Get the three graphs in 'real' graph including the canonicalized one.
         const input_graph: Graph    = rdfn3.getQuads(input);
         const expected_graph: Graph = rdfn3.getQuads(expected);
-        const c14n_graph: Graph     = canonicalizer.canonicalizeDetailed(input_graph).dataset as Graph;
+        const c14n_graph: Graph     = canonicalizer.canonicalizeDetailed(input_graph).canonicalized_dataset as Graph;
 
         // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
         const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
