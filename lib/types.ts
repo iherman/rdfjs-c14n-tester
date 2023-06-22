@@ -46,6 +46,12 @@ export namespace Constants {
     export const PACKAGE_FILE = "https://raw.githubusercontent.com/iherman/rdfjs-c14n/main/package.json";
 }
 
+export enum TestTypes {
+    basic   = "rdfc:RDFC10EvalTest",
+    timeout = "rdfc:RDFC10TimeoutTest",
+    info    = "rdfc:RDFC10InfoTest" 
+}
+
 /**
  * These are the fields in the manifest. Most of the fields are not used (at the moment) by 
  * this tester, but I are defined here to make the JSON->Object conversion simple. 
@@ -56,7 +62,8 @@ export interface TestEntry {
      * and `ID_PREFIX` is defined in {@Link Constants}
      */
     id       : string,
-    type     : string,
+    /** This gives the type of the test. This may determine what exactly the testing process should be */
+    type     : TestTypes,
     name     : string,
     comment  : null | string,
     approval : string,

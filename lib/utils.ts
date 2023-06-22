@@ -10,9 +10,9 @@
  * @packageDocumentation
  */
 
-import { Graph, Constants, TestEntry, TestResult, Json } from './types';
-import { RDFC10 }                                        from 'rdfjs-c14n';
-import * as rdfn3                                        from './rdfn3';
+import { Graph, Constants, TestEntry, TestResult, TestTypes, Json } from './types';
+import { RDFC10 }                                                   from 'rdfjs-c14n';
+import * as rdfn3                                                   from './rdfn3';
 
 
 /**
@@ -52,7 +52,7 @@ export async function getTestList(manifest_name: string): Promise<TestEntry[]> {
  * @param canonicalizer 
  * @returns 
  */
-export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
+async function basicTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
     interface TestPair {
         input    : string,
         expected : string,
@@ -109,26 +109,51 @@ export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promis
         }    
     };
 
+    // Get the test and the expected result from the test entry;
+    // the returned values are strings of nquads.
+    const { input, expected } = await getTestPair(test);
+
+    // Get the three graphs in 'real' graph including the canonicalized one.
+    const input_graph: Graph    = rdfn3.getQuads(input);
+    const expected_graph: Graph = rdfn3.getQuads(expected);
+    const c14n_graph: Graph     = canonicalizer.canonicalizeDetailed(input_graph).canonicalized_dataset as Graph;
+
+    // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
+    const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
+    const expected_nquads: string[] = rdfn3.graphToOrderedNquads(expected_graph);
+    const c14n_nquads: string[]     = rdfn3.graphToOrderedNquads(c14n_graph);
+
+    return {
+        id : test.id,
+        input_nquads, c14n_nquads, expected_nquads,
+        pass: compareNquads(c14n_nquads, expected_nquads)
+    };
+}
+
+/**
+ * Handle a single test: the test, and its requested canonical equivalents are parsed,
+ * the input is canonicalized, and the three datasets (input, canonical, and requested) are
+ * serialized back into nquads, with the latter two compared. Comparison is made by 
+ * comparing the arrays of nquads in order as strings.
+ * 
+ * (It might have been possible to compare the quads by comparing their hash values...)
+ * 
+ * @param test 
+ * @param canonicalizer 
+ * @returns 
+ */
+export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
     try {
-        // Get the test and the expected result from the test entry;
-        // the returned values are strings of nquads.
-        const { input, expected } = await getTestPair(test);
-
-        // Get the three graphs in 'real' graph including the canonicalized one.
-        const input_graph: Graph    = rdfn3.getQuads(input);
-        const expected_graph: Graph = rdfn3.getQuads(expected);
-        const c14n_graph: Graph     = canonicalizer.canonicalizeDetailed(input_graph).canonicalized_dataset as Graph;
-
-        // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
-        const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
-        const expected_nquads: string[] = rdfn3.graphToOrderedNquads(expected_graph);
-        const c14n_nquads: string[]     = rdfn3.graphToOrderedNquads(c14n_graph);
-
-        return {
-            id : test.id,
-            input_nquads, c14n_nquads, expected_nquads,
-            pass: compareNquads(c14n_nquads, expected_nquads)
-        };
+        switch (test.type) {
+            case TestTypes.basic: 
+                return basicTest(test, canonicalizer);
+            case TestTypes.timeout:
+                throw new Error("Timeout control testing not yet implemented");
+            case TestTypes.info:
+                throw new Error("Information test not yet implemented");
+            default:
+                throw new Error(`Unknown test type: ${test.type}`);
+        }
     } catch(error) {
         throw (`${test.id}: ${error}`)
     }
