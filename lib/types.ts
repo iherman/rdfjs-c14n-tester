@@ -5,8 +5,11 @@
  */
 
 import * as rdf from 'rdf-js';
+import { BNodeId } from 'rdfjs-c14n';
 
 export type Json = Record<string, unknown> ;
+
+export type IDMapping = Record<BNodeId,BNodeId>;
 
 export namespace Constants {
     /** 
@@ -47,9 +50,9 @@ export namespace Constants {
 }
 
 export enum TestTypes {
-    basic   = "rdfc:RDFC10EvalTest",
-    timeout = "rdfc:RDFC10TimeoutTest",
-    info    = "rdfc:RDFC10InfoTest" 
+    eval    = "rdfc:RDFC10EvalTest",
+    timeout = "RDFC10NegativeTest",
+    map     = "rdfc:RDFC10MapTest" 
 }
 
 /**
@@ -79,16 +82,22 @@ export interface TestEntry {
  * This type may evolve in future, when the EARL representation of the testing results will be known.
  */
 export interface TestResult {
-    /** This a copy of the `id` value of the test, from {@link TestEntry} */
-    id              : string,
+    /** This is a copy of the `id` value of the test, from {@link TestEntry} */
+    id               : string,
+    /** This is a copy of the `type` value of the tst, from {@link TestEntry} */
+    type             : TestTypes,
     /** Nquads array representation of the test */
-    input_nquads    : string[],
+    input_nquads     : string[],
     /** Nquads array representation of the generated canonical version of the test */
-    c14n_nquads     : string[],
+    c14n_nquads      : string[],
+    /** Generated mapping */
+    c14n_mapping     : IDMapping,
     /** Nquads array representation of the expected canonical version of the test */
-    expected_nquads : string[],
-    /** Comparison result between `c14_nquads` and `expected_nquads` */
-    pass            : boolean,
+    expected_nquads  : string[],
+    /** BNode Mapping */
+    expected_mapping : IDMapping,
+    /** Comparison result between `c14_nquads` and `expected_nquads`, or the IDMapping and the returned mapping */
+    pass             : boolean,
 }
 
 /** 

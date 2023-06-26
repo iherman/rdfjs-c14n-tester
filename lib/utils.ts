@@ -10,13 +10,13 @@
  * @packageDocumentation
  */
 
-import { Graph, Constants, TestEntry, TestResult, TestTypes, Json } from './types';
-import { RDFC10 }                                                   from 'rdfjs-c14n';
-import * as rdfn3                                                   from './rdfn3';
+import { Graph, Constants, TestEntry, TestResult, TestTypes, Json, IDMapping } from './types';
+import { RDFC10, BNodeId }                                                     from 'rdfjs-c14n';
+import * as rdfn3                                                              from './rdfn3';
 
 
 /**
- * As its name says: fetch a JSON file and convert it into a 
+ * As its name says: fetch a JSON file and convert it into a real JSON structure
  * @param fname 
  * @returns 
  */
@@ -24,6 +24,16 @@ export async function fetchJson(fname: string): Promise<Json> {
     const f = await fetch(fname);
     return f.json();
 }
+
+/**
+ * As its name says: fetch a text file 
+ * @param fname 
+ * @returns 
+ */
+async function fetchText(fname: string): Promise<string> {
+    const nqp = await fetch(fname);
+    return nqp.text();           
+};
 
 
 /**
@@ -40,8 +50,90 @@ export async function getTestList(manifest_name: string): Promise<TestEntry[]> {
     return manifest["entries"] as TestEntry[];
 }
 
+
 /**
- * Handle a single test: the test, and its requested canonical equivalents are parsed,
+ * Handle a single mapping test: the test is parsed,
+ * the input is canonicalized, and the canonical mapping is extracted to be compared
+ * with the expected mapping. The input is also re-serialized as a sorted quads, to 
+ * be displayed as part of the test results.
+ * 
+ * (It might have been possible to compare the quads by comparing their hash values...)
+ * 
+ * @param test 
+ * @param canonicalizer 
+ * @returns 
+ */
+async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
+    interface TestPair {
+        quads   : string,
+        expected_mapping : IDMapping
+    }
+
+    const getTestPair = async (test: TestEntry): Promise<TestPair> => {
+        const [p_quads, p_mapping] = await Promise.allSettled([
+            fetchText(`${Constants.TEST_DIR}${test.action}`),
+            fetchJson(`${Constants.TEST_DIR}${test.result}`)
+        ]);
+
+        const errors: string[] = [];
+
+        if (p_quads.status === "rejected") {
+            errors.push("test graph data could not be read");
+        } else if (p_mapping.status === "rejected") {
+            errors.push("expected bnode mapping could not be read");
+        }
+
+        if (errors.length > 0) {
+            throw(errors.join("; "))
+        } else {
+            // Strictly speaking the test for status is unnecessary, but
+            // tsc (or lint) complains...
+            return {
+                quads   : p_quads.status   === "fulfilled" ? p_quads.value    : '', 
+                expected_mapping : p_mapping.status === "fulfilled" ? p_mapping.value as IDMapping : {}
+            }
+        }
+    }
+
+    const compareMaps = (expected: IDMapping, produced: Map<BNodeId,BNodeId>): boolean => {
+        for (const orig_id in expected) {
+            if (expected[orig_id] !== produced.get(orig_id)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const convertIdMap = (expected: IDMapping, produced: Map<BNodeId,BNodeId>): IDMapping => {
+        const retval: IDMapping = {};
+        for (const orig_id in expected) {
+            retval[orig_id] = produced.get(orig_id);
+        }
+        return retval;
+    }
+
+
+    // Get the test and the expected result from the test entry;
+    const { quads, expected_mapping} = await getTestPair(test);
+
+    const input_graph: Graph = rdfn3.getQuads(quads);
+    const c14_result         = canonicalizer.canonicalizeDetailed(input_graph);
+    const c14n_mapping       = c14_result.issued_identifier_map;
+
+    return {
+        id                : test.id,
+        type             : test.type,
+        input_nquads     : rdfn3.graphToOrderedNquads(input_graph),
+        c14n_nquads      : [],
+        c14n_mapping     : convertIdMap(expected_mapping, c14n_mapping),
+        expected_nquads  : [],
+        expected_mapping,
+        pass             : compareMaps(expected_mapping,c14n_mapping)
+    }
+}
+
+/**
+ * Handle a single eval test: the test, and its requested canonical equivalents are parsed,
  * the input is canonicalized, and the three datasets (input, canonical, and requested) are
  * serialized back into nquads, with the latter two compared. Comparison is made by 
  * comparing the arrays of nquads in order as strings.
@@ -52,7 +144,7 @@ export async function getTestList(manifest_name: string): Promise<TestEntry[]> {
  * @param canonicalizer 
  * @returns 
  */
-async function basicTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
+async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
     interface TestPair {
         input    : string,
         expected : string,
@@ -64,15 +156,10 @@ async function basicTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRe
     // the `./types` module.
     //
     //
-    const getTestPair = async (test: TestEntry): Promise<TestPair> => {
-        const fetch_text = async (fname: string): Promise<string> => {
-            const nqp = await fetch(fname);
-            return nqp.text();           
-        };
-    
+    const getTestPair = async (test: TestEntry): Promise<TestPair> => {    
         const [p_input, p_expected] = await Promise.allSettled([
-            fetch_text(`${Constants.TEST_DIR}${test.action}`),
-            fetch_text(`${Constants.TEST_DIR}${test.result}`)
+            fetchText(`${Constants.TEST_DIR}${test.action}`),
+            fetchText(`${Constants.TEST_DIR}${test.result}`)
         ]);
 
         const errors: string[] = [];
@@ -116,7 +203,10 @@ async function basicTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRe
     // Get the three graphs in 'real' graph including the canonicalized one.
     const input_graph: Graph    = rdfn3.getQuads(input);
     const expected_graph: Graph = rdfn3.getQuads(expected);
-    const c14n_graph: Graph     = canonicalizer.canonicalizeDetailed(input_graph).canonicalized_dataset as Graph;
+    const c14_result            = canonicalizer.canonicalizeDetailed(input_graph);
+    const c14n_graph: Graph     = c14_result.canonicalized_dataset as Graph;
+    // const c14n_mapping          = c14_result.issued_identifier_map;
+
 
     // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
     const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
@@ -124,9 +214,14 @@ async function basicTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRe
     const c14n_nquads: string[]     = rdfn3.graphToOrderedNquads(c14n_graph);
 
     return {
-        id : test.id,
-        input_nquads, c14n_nquads, expected_nquads,
-        pass: compareNquads(c14n_nquads, expected_nquads)
+        id               : test.id,
+        type             : test.type,
+        input_nquads, 
+        c14n_nquads,
+        c14n_mapping     : {},
+        expected_nquads,
+        expected_mapping : {},
+        pass             : compareNquads(c14n_nquads, expected_nquads)
     };
 }
 
@@ -145,12 +240,12 @@ async function basicTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRe
 export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
     try {
         switch (test.type) {
-            case TestTypes.basic: 
-                return basicTest(test, canonicalizer);
+            case TestTypes.eval: 
+                return evalTest(test, canonicalizer);
             case TestTypes.timeout:
                 throw new Error("Timeout control testing not yet implemented");
-            case TestTypes.info:
-                throw new Error("Information test not yet implemented");
+            case TestTypes.map:
+                return mapTest(test, canonicalizer);
             default:
                 throw new Error(`Unknown test type: ${test.type}`);
         }
