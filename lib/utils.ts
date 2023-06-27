@@ -64,6 +64,54 @@ export async function getTestList(manifest_name: string): Promise<TestEntry[]> {
     return manifest["entries"] as TestEntry[];
 }
 
+/**
+ * Handle a single timeout test: the test is parsed and the input is canonicalized.
+ * However, the canonicalization step is expected to run into a timeout exception; the
+ * result is true only if that happens.
+ * 
+ * @param test 
+ * @param canonicalizer 
+ * @returns 
+ */
+async function timeoutTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
+    const quads = await fetchText(`${Constants.TEST_DIR}${test.action}`);
+
+    const input_graph: Graph = rdfn3.getQuads(quads);
+
+    try {
+        canonicalizer.canonicalizeDetailed(input_graph);
+    } catch (e) {
+        if (e instanceof RangeError) {
+            // That was the expected result!
+            return {
+                id               : test.id,
+                type             : test.type,
+                input_nquads     : rdfn3.graphToOrderedNquads(input_graph),
+                c14n_nquads      : [],
+                c14n_mapping     : {},
+                expected_nquads  : [],
+                expected_mapping : {},
+                pass             : true
+            }
+        } else {
+            // Something else happened...
+            throw(e);
+        }
+    }
+
+    // It should not have gotten that far...
+    return {
+        id               : test.id,
+        type             : test.type,
+        input_nquads     : rdfn3.graphToOrderedNquads(input_graph),
+        c14n_nquads      : [],
+        c14n_mapping     : {},
+        expected_nquads  : [],
+        expected_mapping : {},
+        pass             : false
+    }
+}
+
 
 /**
  * Handle a single mapping test: the test is parsed,
@@ -98,7 +146,7 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
         }
 
         if (errors.length > 0) {
-            throw(errors.join("; "))
+            throw new Error(errors.join("; "))
         } else {
             // Strictly speaking the test for status is unnecessary, but
             // tsc (or lint) complains...
@@ -246,7 +294,7 @@ export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promis
             case TestTypes.eval: 
                 return evalTest(test, canonicalizer);
             case TestTypes.timeout:
-                throw new Error("Timeout control testing not yet implemented");
+                return timeoutTest(test, canonicalizer);
             case TestTypes.map:
                 return mapTest(test, canonicalizer);
             default:
