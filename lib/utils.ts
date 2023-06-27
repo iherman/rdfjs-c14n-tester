@@ -35,6 +35,20 @@ async function fetchText(fname: string): Promise<string> {
     return nqp.text();           
 };
 
+/**
+ * 
+ * @param produced 
+ * @returns 
+ */
+const convertIdMap = (produced: ReadonlyMap<BNodeId,BNodeId>): IDMapping => {
+    const retval: IDMapping = {};
+
+    for (const [key,value] of produced) {
+        retval[key] = value
+    }
+    return retval;
+}
+
 
 /**
  * Get the list of all tests, which is an array in the manifest file. The manifest 
@@ -78,9 +92,9 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
         const errors: string[] = [];
 
         if (p_quads.status === "rejected") {
-            errors.push("test graph data could not be read");
+            errors.push(`Mapping test on test ${test.id}: n-quad graph could not be read (${p_quads.reason})`)
         } else if (p_mapping.status === "rejected") {
-            errors.push("expected bnode mapping could not be read");
+            errors.push(`Mapping test on test ${test.id}: expected bnode mapping could not be read (${p_mapping.reason})`)
         }
 
         if (errors.length > 0) {
@@ -95,7 +109,7 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
         }
     }
 
-    const compareMaps = (expected: IDMapping, produced: Map<BNodeId,BNodeId>): boolean => {
+    const compareMaps = (expected: IDMapping, produced: ReadonlyMap<BNodeId,BNodeId>): boolean => {
         for (const orig_id in expected) {
             if (expected[orig_id] !== produced.get(orig_id)) {
                 return false;
@@ -104,28 +118,19 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
         return true;
     }
 
-    const convertIdMap = (expected: IDMapping, produced: Map<BNodeId,BNodeId>): IDMapping => {
-        const retval: IDMapping = {};
-        for (const orig_id in expected) {
-            retval[orig_id] = produced.get(orig_id);
-        }
-        return retval;
-    }
-
-
     // Get the test and the expected result from the test entry;
     const { quads, expected_mapping} = await getTestPair(test);
 
     const input_graph: Graph = rdfn3.getQuads(quads);
-    const c14_result         = canonicalizer.canonicalizeDetailed(input_graph);
-    const c14n_mapping       = c14_result.issued_identifier_map;
+    const c14n_result        = canonicalizer.canonicalizeDetailed(input_graph);
+    const c14n_mapping       = c14n_result.issued_identifier_map;
 
     return {
-        id                : test.id,
+        id               : test.id,
         type             : test.type,
         input_nquads     : rdfn3.graphToOrderedNquads(input_graph),
         c14n_nquads      : [],
-        c14n_mapping     : convertIdMap(expected_mapping, c14n_mapping),
+        c14n_mapping     : convertIdMap(c14n_mapping),
         expected_nquads  : [],
         expected_mapping,
         pass             : compareMaps(expected_mapping,c14n_mapping)
@@ -165,9 +170,9 @@ async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRes
         const errors: string[] = [];
 
         if (p_input.status === "rejected") {
-            errors.push("test graph data could not be read")
+            errors.push(`Eval test on test ${test.id}: n-quad graph could not be read (${p_input.reason})`)
         } else if (p_expected.status === "rejected") {
-            errors.push("expected graph data could not read")
+            errors.push(`Eval test on test ${test.id}: expected n-quad graph data could not read (${p_expected.reason})`)
         }
 
         if (errors.length > 0) {
@@ -203,10 +208,8 @@ async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRes
     // Get the three graphs in 'real' graph including the canonicalized one.
     const input_graph: Graph    = rdfn3.getQuads(input);
     const expected_graph: Graph = rdfn3.getQuads(expected);
-    const c14_result            = canonicalizer.canonicalizeDetailed(input_graph);
-    const c14n_graph: Graph     = c14_result.canonicalized_dataset as Graph;
-    // const c14n_mapping          = c14_result.issued_identifier_map;
-
+    const c14n_result           = canonicalizer.canonicalizeDetailed(input_graph);
+    const c14n_graph: Graph     = c14n_result.canonicalized_dataset as Graph;
 
     // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
     const input_nquads: string[]    = rdfn3.graphToOrderedNquads(input_graph);
@@ -218,7 +221,7 @@ async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRes
         type             : test.type,
         input_nquads, 
         c14n_nquads,
-        c14n_mapping     : {},
+        c14n_mapping     : convertIdMap(c14n_result.issued_identifier_map),
         expected_nquads,
         expected_mapping : {},
         pass             : compareNquads(c14n_nquads, expected_nquads)

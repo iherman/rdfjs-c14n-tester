@@ -8,7 +8,7 @@ import { TestEntry, TestResult, Constants } from './lib/types';
 import { createEarlReport }                 from './lib/earl';
 import { RDFC10, LogLevels, Logger }        from 'rdfjs-c14n';
 import { Command }                          from 'commander';
-// import { process }                                  from 'node:process';
+import { batchPromises }                    from './lib/batch';
 
 
 /**
@@ -35,16 +35,16 @@ async function main(): Promise<void> {
     const testNumber = (num?: string): string => {
         if (num) {
             switch (num.length) {
-                case 1:
-                    return `00${num}`;
                 case 2:
-                    return `0${num}`;
+                    return `00${num}`;
                 case 3:
+                    return `0${num}`;
+                case 4:
                 default:
                     return num;
             }
         } else {
-            return "002"
+            return "020c"
         }
     };
 
@@ -74,24 +74,7 @@ async function main(): Promise<void> {
     // "full" means that all the tests must be performed. Otherwise a single test is run with, possibly,
     // a detailed log.
     if (options.full || options.earl) {
-        const promises: Promise<TestResult>[] = tests.map((t: TestEntry): Promise<TestResult> => utils.singleTest(t,rdfc10));
-        // This is a potentially problematic step in case one of the test 'fetch' leads to an exception. That can happen
-        // if the manifest is faulty and refers to a non-existing tests, or one of the tests is unreachable. At some
-        // point is may be worth making the testing more robust in this respect.
-        //
-        // Also, exceptions may be raised here if the canonicalization program itself raises an exception. All the more
-        // reason for handling the exception better...
-        const results: TestResult[] = [];
-        const single_test_issues: string[] = []
-
-        for (const p_result of await Promise.allSettled(promises)) {
-            if (p_result.status === "fulfilled") {
-                results.push(p_result.value)
-            } else {
-                single_test_issues.push(p_result.reason);
-            }
-        }
-
+        const [results, single_test_issues] = await batchPromises(tests, rdfc10);
         if (options.earl) {
             await createEarlReport(results);
         }
@@ -108,7 +91,7 @@ async function main(): Promise<void> {
             }
         }
         if (single_test_issues.length > 0) {
-            console.error(`\nSome tests has resulted in exceptions:\n  ${single_test_issues.join('\n  ')}`);
+            console.error(`\nSome tests have resulted in exceptions:\n  ${single_test_issues.join('\n  ')}`);
         }
     } else {
         const num = (program.args.length === 0) ? testNumber(options.number) : testNumber(program.args[0]);

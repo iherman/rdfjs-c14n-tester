@@ -18,20 +18,21 @@ export namespace Constants {
      * relative addresses for the individual tests, which must be concatenated with this
      * URL.
      */
-    export const TEST_DIR      = "https://raw.githubusercontent.com/w3c/rdf-canon/main/tests/";
+    // export const TEST_DIR      = "https://raw.githubusercontent.com/w3c/rdf-canon/main/tests/";
+    export const TEST_DIR      = "http://localhost:8001/LocalData/github/RCH/rdf-canon/tests/";
 
     /**
      * URL of the (JSON-LD version of) the Manifest file. Note that the '-LD' part is not used,
      * and the only key in the JSON file that is of importance is `entries` that contains an array of
      * {@link TestEntry} instances.
      */
-    export const MANIFEST_NAME = "manifest-rdfc10.jsonld";
+    export const MANIFEST_NAME = "manifest.jsonld";
 
     /**
      * Pattern used to identify individual tests in the manifest; used when individual tests are 
      * run.
      */
-    export const ID_PREFIX     = "manifest-rdfc10#test";
+    export const ID_PREFIX     = "#test";
 
     /**
      * Relative file name of the EARL report preamble
@@ -47,12 +48,19 @@ export namespace Constants {
      * URL of the project's Package.json file
      */
     export const PACKAGE_FILE = "https://raw.githubusercontent.com/iherman/rdfjs-c14n/main/package.json";
+
+    /**
+     * Number of parallel fetches that can be issued against the test server
+     * 
+     * So far: the value of 40 is necessary for localhost, otherwise exceptions occur
+     */
+    export const FETCH_LIMIT = 100;
 }
 
 export enum TestTypes {
     eval    = "rdfc:RDFC10EvalTest",
-    timeout = "RDFC10NegativeTest",
-    map     = "rdfc:RDFC10MapTest" 
+    map     = "rdfc:RDFC10MapTest", 
+    timeout = "rdfc:RDFC10NegativeEvalTest",
 }
 
 /**
