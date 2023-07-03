@@ -80,7 +80,7 @@ async function timeoutTest(test: TestEntry, canonicalizer: RDFC10): Promise<Test
     const input_graph: Graph = rdfn3.getQuads(quads);
 
     try {
-        canonicalizer.canonicalizeDetailed(input_graph);
+        canonicalizer.c14n(input_graph);
     } catch (e) {
         if (e instanceof RangeError) {
             // That was the expected result!
@@ -201,7 +201,7 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
     const { quads, expected_mapping} = await getTestPair(test);
 
     const input_graph: Graph = rdfn3.getQuads(quads);
-    const c14n_result        = canonicalizer.canonicalizeDetailed(input_graph);
+    const c14n_result        = canonicalizer.c14n(input_graph);
     const c14n_mapping       = c14n_result.issued_identifier_map;
 
     const pass: boolean = compareMaps(expected_mapping, c14n_mapping) && compareKeys(input_graph, c14n_mapping);
@@ -289,7 +289,7 @@ async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRes
     // Get the three graphs in 'real' graph including the canonicalized one.
     const input_graph: Graph    = rdfn3.getQuads(input);
     const expected_graph: Graph = rdfn3.getQuads(expected);
-    const c14n_result           = canonicalizer.canonicalizeDetailed(input_graph);
+    const c14n_result           = canonicalizer.c14n(input_graph);
     const c14n_graph: Graph     = c14n_result.canonicalized_dataset as Graph;
 
     // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
