@@ -13,6 +13,7 @@
 import { Graph, Constants, TestEntry, TestResult, TestTypes, Json, IDMapping } from './types';
 import { RDFC10, BNodeId }                                                     from 'rdfjs-c14n';
 import * as rdfn3                                                              from './rdfn3';
+import * as rdf                                                                from 'rdf-js';
 
 
 /**
@@ -166,12 +167,44 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
         return true;
     }
 
+    const compareKeys = (graph: Graph, produced: ReadonlyMap<BNodeId,BNodeId>): boolean => {
+        const getBNodeIds = (graph: Graph): Set<BNodeId> => {
+            const bnode_ids: Set<BNodeId> = new Set();
+            const addBnode = (term: rdf.Term): void => {
+                if (term.termType === "BlankNode") {
+                    bnode_ids.add(term.value)
+                }
+            }
+    
+            graph.forEach((quad: rdf.Quad): void => {
+                addBnode(quad.subject);
+                addBnode(quad.object);
+                addBnode(quad.graph);
+            });
+            return bnode_ids
+        }
+
+        const expected: Set<BNodeId> = getBNodeIds(graph);
+        if (expected.size !== produced.size) {
+            return false;
+        } else {
+            for (const key of expected) {
+                if (!produced.has(key)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     // Get the test and the expected result from the test entry;
     const { quads, expected_mapping} = await getTestPair(test);
 
     const input_graph: Graph = rdfn3.getQuads(quads);
     const c14n_result        = canonicalizer.canonicalizeDetailed(input_graph);
     const c14n_mapping       = c14n_result.issued_identifier_map;
+
+    const pass: boolean = compareMaps(expected_mapping, c14n_mapping) && compareKeys(input_graph, c14n_mapping);
 
     return {
         id               : test.id,
@@ -181,7 +214,7 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
         c14n_mapping     : convertIdMap(c14n_mapping),
         expected_nquads  : [],
         expected_mapping,
-        pass             : compareMaps(expected_mapping,c14n_mapping)
+        pass,
     }
 }
 

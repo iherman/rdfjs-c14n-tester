@@ -52,9 +52,9 @@ export namespace Constants {
     /**
      * Number of parallel fetches that can be issued against the test server
      * 
-     * So far: the value of 40 is necessary for localhost, otherwise exceptions occur
+     * So far: the value of 40 is necessary for localhost, otherwise exceptions may occur
      */
-    export const FETCH_LIMIT = 100;
+    export const FETCH_LIMIT = 40;
 }
 
 export enum TestTypes {
@@ -72,16 +72,17 @@ export interface TestEntry {
      * The ID value is of the form `ID_PREFIXabc`, where `abc` is a three digit number, 
      * and `ID_PREFIX` is defined in {@Link Constants}
      */
-    id       : string,
+    id                      : string,
     /** This gives the type of the test. This may determine what exactly the testing process should be */
-    type     : TestTypes,
-    name     : string,
-    comment  : null | string,
-    approval : string,
+    type                    : TestTypes,
+    name                    : string,
+    comment                 : null | string,
+    computationalComplexity : string,
+    approval                : string,
     /** This string provides a relative URL to the test itself */
-    action   : string,
+    action                  : string,
     /** This string provided a relative URL to the expected, canonical version of the test */
-    result   : string
+    result                  : string,
 }
 
 /**
