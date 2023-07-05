@@ -18,8 +18,8 @@ export namespace Constants {
      * relative addresses for the individual tests, which must be concatenated with this
      * URL.
      */
-    // export const TEST_DIR      = "https://raw.githubusercontent.com/w3c/rdf-canon/main/tests/";
-    export const TEST_DIR      = "http://localhost:8001/LocalData/github/RCH/rdf-canon/tests/";
+    export const TEST_DIR      = "https://raw.githubusercontent.com/w3c/rdf-canon/main/tests/";
+    // export const TEST_DIR      = "http://localhost:8001/LocalData/github/RCH/rdf-canon/tests/";
 
     /**
      * URL of the (JSON-LD version of) the Manifest file. Note that the '-LD' part is not used,
