@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Dataset canonicalization playground</title>
+        <link rel="stylesheet" href="css/mystyle.css">
+        <link rel="stylesheet" href="css/tab.css">
+        <script src="c14n.min.js"></script>        
+    </head>
+
+    <body>
+        <h1>Dataset canonicalization</h1>
+
+        <div id="top_level">
+            <div id="input">
+                <label>Input</label>
+                <textarea id="inp" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off">
+@prefix ex: &lt;http://example.com/#&gt; .
+ex:p ex:q [
+    ex:p _:x2 ;
+] .
+ex:p ex:q [
+    ex:p _:e3 ;
+] .
+_:x2 &lt;http://example.com/#r&gt; _:e3 .
+                </textarea>
+            </div>
+            <div id="convert" class="container">
+                <div class="center">
+                    <input type="button" id="go" value="&gt;&gt;&gt; canonicalize"  >
+                </div>
+            </div>
+            <div id="output" class="pc-tab">
+                <input checked="checked" id="tab1" type="radio" name="pct"/>
+                <input id="tab2" type="radio" name="pct" />
+                <input id="tab3" type="radio" name="pct" />
+                <nav>
+                    <ul>
+                        <li class="tab1">
+                            <label for="tab1">Original quads</label>
+                        </li>
+                        <li class="tab2">
+                            <label for="tab2">Canonical</label>
+                        </li>
+                        <li class="tab3">
+                            <label for="tab3">Canonical quads</label>
+                        </li>
+                    </ul>
+                </nav>
+                <div>
+                    <textarea class="tab1" id="original_quads" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off" readonly></textarea>
+                    <textarea class="tab2" id="c14n" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off" readonly></textarea>
+                    <textarea class="tab3" id="c14n_quads" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off" readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

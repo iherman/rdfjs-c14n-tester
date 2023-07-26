@@ -1,0 +1,108 @@
+
+div#top_level {
+    display: grid;
+    grid-template-columns: 3fr 1fr 3fr;
+    column-gap: 10px;
+}
+
+
+div#input {
+    display: grid
+}
+
+textarea {
+    border: 2px solid #ddd;
+}
+
+#input label {
+    float: left;
+    padding: 15px 25px;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    color: #444;
+    width: 40;
+}
+
+.container {
+    height: 200px;
+    position: relative;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Component Needs */
+.pc-tab>input,
+.pc-tab>div textarea {
+    display: none;
+}
+
+#tab1:checked~div .tab1,
+#tab2:checked~div .tab2,
+#tab3:checked~div .tab3 {
+    display: block;
+}
+
+#tab1:checked~nav .tab1,
+#tab2:checked~nav .tab2,
+#tab3:checked~nav .tab3 {
+    color: red;
+}
+
+.pc-tab ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pc-tab ul li label {
+    float: left;
+    padding: 15px 25px;
+    border: 1px solid #ddd;
+    border-bottom: 1px;
+    background: #eeeeee;
+    color: #444;
+}
+
+.pc-tab ul li label:hover {
+    background: #dddddd;
+}
+
+.pc-tab ul li label:active {
+    background: #ffffff;
+}
+
+.pc-tab ul li:not(:last-child) label {
+    border-right-width: 0;
+}
+
+.pc-tab section {
+    clear: both;
+}
+
+#tab1:checked~nav .tab1 label,
+#tab2:checked~nav .tab2 label,
+#tab3:checked~nav .tab3 label {
+    background: white;
+    color: #111;
+    position: relative;
+}
+
+#tab1:checked~nav .tab1 label:after,
+#tab2:checked~nav .tab2 label:after,
+#tab3:checked~nav .tab3 label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #ffffff;
+    left: 0;
+    bottom: -1px;
+}
+

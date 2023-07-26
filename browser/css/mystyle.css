@@ -1,0 +1,55 @@
+body {
+    font: 14px arial, helvetica, arial, freesans, clean, sans-serif;
+    color: black;
+    line-height: 1.4em;
+    background-color: #F8F8F8;
+    margin: 2em 2em;
+}
+
+a {
+    color: NavyBlue;
+    background: transparent;
+}
+
+a:link,
+a:active {
+    background: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: NavyBlue;
+    background: transparent;
+}
+
+a:hover {
+    background-color: yellow;
+    color: #00e;
+}
+
+a code,
+a:link code,
+a:visited code {
+    color: #4183c4;
+}
+
+a:link img,
+a:visited img {
+    border-style: none
+}
+
+/* Headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+    padding-bottom: 0.15em;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    color: #005a9c;
+    font-weight: normal;
+}
