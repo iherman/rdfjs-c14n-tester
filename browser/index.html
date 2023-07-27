@@ -9,10 +9,15 @@
     <body>
         <h1>Dataset canonicalization</h1>
 
+        <p>
+            This is just a simple interface to generate canonical versions of Turtle/TriG RDF data into their canonical formats. Nothing fancy in 
+            terms of user interface; only goal is to show that the rdfjs-c14n library (compiled from the original sources in TypeScript using
+            <code>esbuild</code>) is usable from a browser.
+        </p>
+
         <div id="top_level">
             <div id="input">
-                <label>Input</label>
-                <textarea id="inp" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off">
+                <textarea id="inp" rows="30" spellcheck="false" wrap="soft" autocomplete="off">
 @prefix ex: &lt;http://example.com/#&gt; .
 ex:p ex:q [
     ex:p _:x2 ;
@@ -20,7 +25,12 @@ ex:p ex:q [
 ex:p ex:q [
     ex:p _:e3 ;
 ] .
-_:x2 &lt;http://example.com/#r&gt; _:e3 .
+ex:graph {
+    _:x2 &lt;http://example.com/#r&gt; _:e3 .
+}
+_:g {
+   _:e3 &lt;http://example.com/#r&gt; "Alice" .
+}
                 </textarea>
             </div>
             <div id="convert" class="container">
@@ -29,26 +39,28 @@ _:x2 &lt;http://example.com/#r&gt; _:e3 .
                 </div>
             </div>
             <div id="output" class="pc-tab">
-                <input checked="checked" id="tab1" type="radio" name="pct"/>
+                <input id="tab1" type="radio" name="pct" checked="checked" />
                 <input id="tab2" type="radio" name="pct" />
                 <input id="tab3" type="radio" name="pct" />
-                <nav>
-                    <ul>
-                        <li class="tab1">
-                            <label for="tab1">Original quads</label>
-                        </li>
-                        <li class="tab2">
-                            <label for="tab2">Canonical</label>
-                        </li>
-                        <li class="tab3">
-                            <label for="tab3">Canonical quads</label>
-                        </li>
-                    </ul>
-                </nav>
-                <div>
-                    <textarea class="tab1" id="original_quads" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off" readonly></textarea>
-                    <textarea class="tab2" id="c14n" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off" readonly></textarea>
-                    <textarea class="tab3" id="c14n_quads" cols="70" rows="25" spellcheck="false" wrap="soft" autocomplete="off" readonly></textarea>
+                <div id="areas">
+                    <nav>
+                        <ul>
+                            <li class="tab1">
+                                <label for="tab1">Original in quads</label>
+                            </li>
+                            <li class="tab2">
+                                <label for="tab2">Original canonicalized</label>
+                            </li>
+                            <li class="tab3">
+                                <label for="tab3">Canonical quads</label>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="c14n_output">
+                        <textarea class="tab1" rows="30" spellcheck="false" wrap="soft" autocomplete="off" readonly id="original_quads"></textarea>
+                        <textarea class="tab2" rows="30" spellcheck="false" wrap="soft" autocomplete="off" readonly id="c14n"></textarea>
+                        <textarea class="tab3" rows="30" spellcheck="false" wrap="soft" autocomplete="off" readonly id="c14n_quads"></textarea>
+                    </div>
                 </div>
             </div>
         </div>

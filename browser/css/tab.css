@@ -1,8 +1,8 @@
 
 div#top_level {
     display: grid;
-    grid-template-columns: 3fr 1fr 3fr;
-    column-gap: 10px;
+    grid-template-rows: 5fr 1fr 5fr;
+    row-gap: 10px;
 }
 
 
@@ -12,34 +12,33 @@ div#input {
 
 textarea {
     border: 2px solid #ddd;
-}
-
-#input label {
-    float: left;
-    padding: 15px 25px;
-    border: 1px solid #ddd;
-    border-bottom: 0;
-    color: #444;
-    width: 40;
+    width: 100%;
 }
 
 .container {
-    height: 200px;
+    height: 20px;
     position: relative;
 }
 
 .center {
-    margin: 0;
+    margin: 10;
     position: absolute;
-    top: 90%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 /* Component Needs */
+
 .pc-tab>input,
 .pc-tab>div textarea {
     display: none;
+}
+
+#areas {
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+    row-gap: 0px;
 }
 
 #tab1:checked~div .tab1,
@@ -48,11 +47,14 @@ textarea {
     display: block;
 }
 
-#tab1:checked~nav .tab1,
-#tab2:checked~nav .tab2,
-#tab3:checked~nav .tab3 {
-    color: red;
+#c14n_output {
+    width: 100%;
+    /* border: solid red; */
+    transform: translateY(-26px);
 }
+
+#c14_output textarea {}
+
 
 .pc-tab ul {
     list-style: none;
@@ -81,21 +83,18 @@ textarea {
     border-right-width: 0;
 }
 
-.pc-tab section {
-    clear: both;
-}
 
-#tab1:checked~nav .tab1 label,
-#tab2:checked~nav .tab2 label,
-#tab3:checked~nav .tab3 label {
+#tab1:checked~div nav .tab1 label,
+#tab2:checked~div nav .tab2 label,
+#tab3:checked~div nav .tab3 label {
     background: white;
     color: #111;
     position: relative;
 }
 
-#tab1:checked~nav .tab1 label:after,
-#tab2:checked~nav .tab2 label:after,
-#tab3:checked~nav .tab3 label:after {
+#tab1:checked~div nav .tab1 label:after,
+#tab2:checked~div nav .tab2 label:after,
+#tab3:checked~div nav .tab3 label:after {
     content: '';
     display: block;
     position: absolute;
