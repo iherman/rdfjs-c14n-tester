@@ -79,6 +79,7 @@ export interface TestEntry {
     comment                 : null | string,
     computationalComplexity : string,
     approval                : string,
+    hashAlgorithm           : string,
     /** This string provides a relative URL to the test itself */
     action                  : string,
     /** This string provided a relative URL to the expected, canonical version of the test */

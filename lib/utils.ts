@@ -322,14 +322,35 @@ async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRes
  * @returns 
  */
 export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
+    // A bit of a hack... if the test requires to change the default hash algorithm,
+    // then the "common" canonicalizer won't be usable, because it may interfere with other
+    // tests that run in under promises. 
+    // Better create a new instance of the canonicalizer. It is less efficient, but there are only
+    // few tests that include this feature, so it does not really matter.
+    const finalCanonicalizer = () :RDFC10 => {
+        if (test.hashAlgorithm !== undefined && test.hashAlgorithm !== "sha256") {
+            const rdfc10 = new RDFC10();
+            // First check whether the provided hash algorithm is usable or not
+            if (rdfc10.available_hash_algorithms.includes(test.hashAlgorithm.toLowerCase())) {
+                rdfc10.hash_algorithm = test.hashAlgorithm;
+            } else {
+                throw new Error(`${test.hashAlgorithm} is not available for rdfjs-c14n; test cannot be run`);
+            }
+            return rdfc10;
+        } else {
+            return canonicalizer;
+        }
+    }
+    const final_canonicalizer = finalCanonicalizer();
+
     try {
         switch (test.type) {
             case TestTypes.eval: 
-                return evalTest(test, canonicalizer);
+                return evalTest(test, final_canonicalizer);
             case TestTypes.timeout:
-                return timeoutTest(test, canonicalizer);
+                return timeoutTest(test, final_canonicalizer);
             case TestTypes.map:
-                return mapTest(test, canonicalizer);
+                return mapTest(test, final_canonicalizer);
             default:
                 throw new Error(`Unknown test type: ${test.type}`);
         }
