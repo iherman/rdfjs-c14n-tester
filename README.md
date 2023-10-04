@@ -6,5 +6,7 @@ Having this as a separate repository makes it also possible to test `rdfjs-c14n`
 
 (Note, however, that at this point the `package.json` file in the package relies on the local linkage to the `rdfjs-c14n` module rather than importing from `npm`. When the project gets to a final equilibrium point, the package file will be modified. In the meantime, users of this module must modify the `package.json` file by putting a reference to `rdfjs-c14n` manually.)
 
+Functionally, but also in terms of the Typescript code, this version is almost identical to its [sister project](https://github.com/iherman/rdfjs-c14n-tester-d), except that this version runs on top of [Node.js](https://nodejs.org) instead of [Deno](https://deno.land). 
+
 ---
 Maintainer: [@iherman](https://github.com/iherman)
