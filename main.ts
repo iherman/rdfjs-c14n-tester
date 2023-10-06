@@ -9,6 +9,7 @@ import { createEarlReport }                 from './lib/earl';
 import { RDFC10, LogLevels, Logger }        from 'rdfjs-c14n';
 import { Command }                          from 'commander';
 import { batchPromises }                    from './lib/batch';
+import * as process                         from 'node:process';
 
 
 /**
