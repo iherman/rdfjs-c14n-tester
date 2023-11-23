@@ -13,7 +13,7 @@ interface DisplayableResults {
     c14n_quads: string;
 }
 
-function process(original: string): DisplayableResults {
+async function process(original: string): Promise<DisplayableResults> {
     const change_bnodes = (map: ReadonlyMap<BNodeId, BNodeId>, ttl: string): string => {
         let retval = ttl;
         for (const key of map.keys()) {
@@ -23,7 +23,7 @@ function process(original: string): DisplayableResults {
     }
 
     // Run the real deal:
-    const results: C14nResult = (new RDFC10()).c14n(original);
+    const results: C14nResult = await (new RDFC10()).c14n(original);
 
     // Collect the results
     const original_quads: string = toNquads(original);
@@ -34,7 +34,7 @@ function process(original: string): DisplayableResults {
 }
 
 
-function convert(): void {
+async function convert(): Promise<void> {
     const txtArea = (id: string): HTMLTextAreaElement => {
         const element = document.getElementById(id);
         if (element === null) {
@@ -48,7 +48,7 @@ function convert(): void {
     const original = text.value;
     // alert(`before doit "${original}"`);
     try {
-        const results = process(original);
+        const results = await process(original);
 
         const original_quads = txtArea("original_quads");
         const c14n = txtArea("c14n");

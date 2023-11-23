@@ -5,7 +5,6 @@
  */
 import * as utils                           from './utils';
 import { TestEntry, TestResult, Constants } from './types';
-import { RDFC10 }                           from 'rdfjs-c14n';
 
 import * as _ from 'underscore';
 
