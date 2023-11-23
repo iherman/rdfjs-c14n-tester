@@ -1,14 +1,17 @@
 {
   "name": "rdfjs-c14n-tester",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Official testing the rdfjs-c14n package as an external dependency",
   "main": "main.ts",
   "scripts": {
-    "main": "NODE_OPTIONS=--no-warnings ./node_modules/.bin/ts-node main.ts",
+    "main": "./node_modules/.bin/ts-node main.ts",
     "browserlib": "./node_modules/.bin/esbuild --platform=browser --bundle --outfile=browser/c14n.min.js --minify browser/c14n.ts"
   },
   "author": "Ivan Herman <ivan@w3.org> (https://www.w3.org/People/Ivan/)",
   "license": "W3C-20150513",
+  "engines": {
+    "node": ">=21.0.0"
+  },
   "dependencies": {
     "@tpluscode/rdf-string": "^0.2.27",
     "@types/commander": "^2.12.2",

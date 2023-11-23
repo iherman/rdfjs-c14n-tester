@@ -23,7 +23,7 @@ import * as process                         from 'node:process';
  * Options:
  *   -f --full             Run the full tests suite, returns the list of fails (if any)
  *   -e --earl             Run the full tests suite and produce an EARL report file
- *   -n --number [number]  Test number
+ *   -n --number [number]  Test identifier (number + 'c' or 'm')
  *   -d --debug            Display all log
  *   -t --trace            Display trace log
  *   -h, --help            display help for command
@@ -32,28 +32,25 @@ import * as process                         from 'node:process';
  * @async
  */
 async function main(): Promise<void> {
-    // Minor thingy: the test numbers are always three digit, which may be a pain for the users to type...
-    const testNumber = (num?: string): string => {
-        if (num) {
-            switch (num.length) {
+    // Minor thingy: the test ids are always three digit plus a character, which may be a pain for the users to type...
+    const testNumber = (id?: string): string => {
+        if (id) {
+            switch (id.length) {
                 case 2:
-                    return `00${num}`;
+                    return `00${id}`;
                 case 3:
-                    return `0${num}`;
+                    return `0${id}`;
                 case 4:
                 default:
-                    return num;
+                    return id;
             }
         } else {
             return "020c"
         }
     };
 
-    // This is thing we are testing...
-    const rdfc10 = new RDFC10();
-
     // Grab the list of official test references from the github repository, via the test manifest.
-    const tests:  TestEntry[] = await utils.getTestList(Constants.MANIFEST_NAME);
+    const tests: TestEntry[] = await utils.getTestList(Constants.MANIFEST_NAME);
 
     // This is just standard UI handling...
     const program = new Command();
@@ -63,7 +60,7 @@ async function main(): Promise<void> {
         .usage('[options]')
         .option('-f --full', 'Run the full tests suite, just return the list of fails')
         .option('-e --earl', 'Run the full tests suite and produce an EARL report file')
-        .option('-n --number [number]', 'Test number')
+        .option('-n --number [number]', 'Test identifier (number + \'c\' or \'m\')')
         .option('-d --debug', 'Display all log')
         .option('-t --trace', 'Display trace and debug log')
         .parse(process.argv);
@@ -75,7 +72,7 @@ async function main(): Promise<void> {
     // "full" means that all the tests must be performed. Otherwise a single test is run with, possibly,
     // a detailed log.
     if (options.full || options.earl) {
-        const [results, single_test_issues] = await batchPromises(tests, rdfc10);
+        const [results, single_test_issues] = await batchPromises(tests);
         if (options.earl) {
             await createEarlReport(results);
         }
@@ -108,6 +105,11 @@ async function main(): Promise<void> {
                 throw("Wrong test number...");
             };
             const the_test = locateTestEntry(num,tests);
+
+            // The (single) canonicalizer is created here to allow for
+            // a possible logger
+            const rdfc10 = new RDFC10();
+
 
             // Set up the logger, if requested
             let logger : Logger|undefined = undefined;
