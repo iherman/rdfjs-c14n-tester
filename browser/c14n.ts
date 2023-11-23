@@ -70,29 +70,3 @@ window.addEventListener("load", () => {
         button.addEventListener("click", convert);
     }
 })
-
-
-
-
-
-
-// --------------------------
-
-// const test: string = `
-// @prefix ex: <http://example.com/#> .
-// ex:p ex:q [
-//     ex:p _:x2 ;
-// ] .
-// ex:p ex:q [
-//     ex:p _:e3 ;
-// ] .    
-// _:x2 <http://example.com/#r> _:e3 .
-// `;
-
-// const result = process(test);
-
-// console.log(`>>>> original: ${result.original}`);
-// console.log(`>>>> original in nquads: \n${result.original_quads}`);
-// console.log(`>>>> canonicalized: ${result.c14n}`);
-// console.log(`>>>> canonicalized in nquads:\n${result.c14n_quads}`);
-
