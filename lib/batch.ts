@@ -19,10 +19,10 @@ import * as _ from 'underscore';
  * @param rdfc10 
  * @returns 
  */
-export async function batchPromises(tests: TestEntry[], rdfc10: RDFC10): Promise<[results: TestResult[], test_issues: string[]]> {
+export async function batchPromises(tests: TestEntry[]): Promise<[results: TestResult[], test_issues: string[]]> {
     // Execute a batch of tests
     const execute = async (batch: TestEntry[]): Promise<[results: TestResult[], test_issues: string[]]> => {
-        const promises: Promise<TestResult>[] = batch.map((t: TestEntry): Promise<TestResult> => utils.singleTest(t,rdfc10));
+        const promises: Promise<TestResult>[] = batch.map((t: TestEntry): Promise<TestResult> => utils.singleTest(t));
         const retval_results: TestResult[] = [];
         const single_test_issues: string[] = [];
         for (const p_result of await Promise.allSettled(promises)) {

@@ -80,7 +80,7 @@ async function timeoutTest(test: TestEntry, canonicalizer: RDFC10): Promise<Test
     const input_graph: Graph = rdfn3.getQuads(quads);
 
     try {
-        canonicalizer.c14n(input_graph);
+        await canonicalizer.c14n(input_graph);
     } catch (e) {
         if (e instanceof RangeError) {
             // That was the expected result!
@@ -201,7 +201,7 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
     const { quads, expected_mapping} = await getTestPair(test);
 
     const input_graph: Graph = rdfn3.getQuads(quads);
-    const c14n_result        = canonicalizer.c14n(input_graph);
+    const c14n_result        = await canonicalizer.c14n(input_graph);
     const c14n_mapping       = c14n_result.issued_identifier_map;
 
     const pass: boolean = compareMaps(expected_mapping, c14n_mapping) && compareKeys(input_graph, c14n_mapping);
@@ -289,7 +289,7 @@ async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRes
     // Get the three graphs in 'real' graph including the canonicalized one.
     const input_graph: Graph    = rdfn3.getQuads(input);
     const expected_graph: Graph = rdfn3.getQuads(expected);
-    const c14n_result           = canonicalizer.c14n(input_graph);
+    const c14n_result           = await canonicalizer.c14n(input_graph);
     const c14n_graph: Graph     = c14n_result.canonicalized_dataset as Graph;
 
     // Serialize the three graphs/datasets. The last two will be compared; if they match, the test passes.
@@ -321,36 +321,27 @@ async function evalTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestRes
  * @param canonicalizer 
  * @returns 
  */
-export async function singleTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResult> {
-    // A bit of a hack... if the test requires to change the default hash algorithm,
-    // then the "common" canonicalizer won't be usable, because it may interfere with other
-    // tests that run in under promises. 
-    // Better create a new instance of the canonicalizer. It is less efficient, but there are only
-    // few tests that include this feature, so it does not really matter.
-    const finalCanonicalizer = () :RDFC10 => {
-        if (test.hashAlgorithm !== undefined && test.hashAlgorithm !== "sha256") {
-            const rdfc10 = new RDFC10();
-            // First check whether the provided hash algorithm is usable or not
-            if (rdfc10.available_hash_algorithms.includes(test.hashAlgorithm.toLowerCase())) {
-                rdfc10.hash_algorithm = test.hashAlgorithm;
-            } else {
-                throw new Error(`${test.hashAlgorithm} is not available for rdfjs-c14n; test cannot be run`);
-            }
-            return rdfc10;
+export async function singleTest(test: TestEntry, canonicalizer: RDFC10 = undefined): Promise<TestResult> {
+    // The canonicalizer itself must be created if not yet done. Furthermore, depending on the test
+    // parameters, additional features may have to be changed.
+    const rdfc10 = (canonicalizer === undefined) ? new RDFC10() : canonicalizer;
+
+    if (test.hashAlgorithm !== undefined && test.hashAlgorithm !== "sha256") {
+        if (rdfc10.available_hash_algorithms.includes(test.hashAlgorithm.toLowerCase())) {
+            rdfc10.hash_algorithm = test.hashAlgorithm;
         } else {
-            return canonicalizer;
+            throw new Error(`${test.hashAlgorithm} is not available for rdfjs-c14n; test ${test.id} cannot be run`);
         }
     }
-    const final_canonicalizer = finalCanonicalizer();
-
+ 
     try {
         switch (test.type) {
             case TestTypes.eval: 
-                return evalTest(test, final_canonicalizer);
+                return evalTest(test, rdfc10);
             case TestTypes.timeout:
-                return timeoutTest(test, final_canonicalizer);
+                return timeoutTest(test, rdfc10);
             case TestTypes.map:
-                return mapTest(test, final_canonicalizer);
+                return mapTest(test, rdfc10);
             default:
                 throw new Error(`Unknown test type: ${test.type}`);
         }
