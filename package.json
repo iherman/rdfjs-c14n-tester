@@ -1,6 +1,6 @@
 {
   "name": "rdfjs-c14n-tester",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Official testing the rdfjs-c14n package as an external dependency",
   "main": "main.ts",
   "scripts": {
@@ -13,11 +13,11 @@
     "node": ">=21.0.0"
   },
   "dependencies": {
+    "@rdfjs/types": "^1.1.0",
     "@tpluscode/rdf-string": "^0.2.27",
     "@types/commander": "^2.12.2",
     "@types/n3": "^1.10.4",
     "@types/node": "^20.2.5",
-    "@types/rdf-js": "^4.0.2",
     "@types/underscore": "^1.11.5",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
@@ -25,7 +25,6 @@
     "esbuild": "0.18.11",
     "eslint": "^8.42.0",
     "n3": "^1.16.3",
-    "rdf-js": "^4.0.2",
     "rdfjs-c14n": "file:../rdfjs-c14n",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.3",

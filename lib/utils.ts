@@ -13,7 +13,7 @@
 import { Graph, Constants, TestEntry, TestResult, TestTypes, Json, IDMapping } from './types';
 import { RDFC10, BNodeId }                                                     from 'rdfjs-c14n';
 import * as rdfn3                                                              from './rdfn3';
-import * as rdf                                                                from 'rdf-js';
+import * as rdf                                                                from '@rdfjs/types';
 
 
 /**
@@ -176,11 +176,11 @@ async function mapTest(test: TestEntry, canonicalizer: RDFC10): Promise<TestResu
                 }
             }
     
-            graph.forEach((quad: rdf.Quad): void => {
+            for (const quad of graph) {
                 addBnode(quad.subject);
                 addBnode(quad.object);
                 addBnode(quad.graph);
-            });
+            };
             return bnode_ids
         }
 

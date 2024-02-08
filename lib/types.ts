@@ -4,7 +4,7 @@
  * @packageDocumentation
  */
 
-import * as rdf from 'rdf-js';
+import * as rdf    from '@rdfjs/types';
 import { BNodeId } from 'rdfjs-c14n';
 
 export type Json = Record<string, unknown> ;
@@ -111,8 +111,9 @@ export interface TestResult {
 }
 
 /** 
- * Just a shorthand for an RDF Graph/Dataset: it is a set of quads...
+ * Just a shorthand for an RDF Graph/Dataset
  * 
  * This is the representation sent to the canonicalizer algorithm, as well as the returned format thereof.
+ * (Actually, the return type is a Set, but this package uses the iteration only.)
  */
-export type Graph = Set<rdf.Quad>;
+export type Graph = Iterable<rdf.Quad>;

@@ -7,7 +7,7 @@
  */
 
 import * as n3    from 'n3';
-import * as rdf   from 'rdf-js';
+import * as rdf   from '@rdfjs/types';
 import { nquads } from '@tpluscode/rdf-string';
 import { Graph }  from './types';
 
@@ -42,7 +42,10 @@ export function graphToOrderedNquads(quads: Graph): string[] {
 export function getQuads(trig: string): Graph {    
     const parser = new n3.Parser({blankNodePrefix: ''});
     const quads: rdf.Quad[] = parser.parse(trig);
-    return new Set<rdf.Quad>(quads);
+    // Involving an n3 store is just done to ensure uniqueness of all quads
+    // although this does not really happen in our tests 
+    return new n3.Store(quads);
+    // return new Set<rdf.Quad>(new n3.Store(quads));
 }
 
 
