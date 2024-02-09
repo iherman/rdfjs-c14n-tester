@@ -102,7 +102,7 @@ async function main(): Promise<void> {
                         return entry;
                     }
                 }
-                throw("Wrong test number...");
+                throw(`Wrong test number... ${num}`);
             };
             const the_test = locateTestEntry(num,tests);
 
