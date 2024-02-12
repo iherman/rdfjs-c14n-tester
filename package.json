@@ -24,6 +24,7 @@
     "commander": "^10.0.0",
     "esbuild": "0.18.11",
     "eslint": "^8.42.0",
+    "event-emitter-promisify": "^1.1.0",
     "n3": "^1.16.3",
     "rdfjs-c14n": "file:../rdfjs-c14n",
     "ts-node": "^10.9.1",

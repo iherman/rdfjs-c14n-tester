@@ -6,11 +6,10 @@
  * @packageDocumentation
  */
 
-import * as n3    from 'n3';
-import * as rdf   from '@rdfjs/types';
-import { nquads } from '@tpluscode/rdf-string';
-import { Graph }  from './types';
-
+import * as n3                   from 'n3';
+import * as rdf                  from '@rdfjs/types';
+import { Graph }                 from './types';
+import { promisifyEventEmitter } from "event-emitter-promisify";
 
 /**
  * Convert the graph into ordered NQuads, more exactly into an array of individual NQuad statement
@@ -18,9 +17,10 @@ import { Graph }  from './types';
  * @returns 
  */
 export function graphToOrderedNquads(quads: Graph): string[] {
+    const n3Writer = new n3.Writer();
     const quadToNquad = (quad: rdf.Quad): string => {
-        const retval = nquads`${quad}`.toString();
-        return retval.endsWith('  .') ? retval.replace(/  .$/, ' .') : retval;    
+        const retval = n3Writer.quadToString(quad.subject, quad.predicate, quad.object, quad.graph);
+        return retval.endsWith('  .') ? retval.replace(/  .$/, ' .') : retval;
     }
 
     let retval: string[] = [];
@@ -39,14 +39,27 @@ export function graphToOrderedNquads(quads: Graph): string[] {
  * @param trig - TriG content
  * @returns 
  */
-export function getQuads(trig: string): Graph {    
-    const parser = new n3.Parser({blankNodePrefix: ''});
-    const quads: rdf.Quad[] = parser.parse(trig);
-    // Involving an n3 store is just done to ensure uniqueness of all quads
-    // although this does not really happen in our tests 
-    return new n3.Store(quads);
-    // return new Set<rdf.Quad>(new n3.Store(quads));
+
+export async function getQuads(trig: string): Promise<Graph> {
+    const store = new n3.Store();
+    const parser = new n3.StreamParser({ blankNodePrefix: '' });
+    const storeEventHandler = store.import(parser);
+
+    parser.write(trig);
+    parser.end();
+    await promisifyEventEmitter(storeEventHandler);
+    return store;
 }
+
+
+
+// export function getQuads(trig: string): Graph {    
+//     const parser = new n3.Parser({blankNodePrefix: ''});
+//     const quads: rdf.Quad[] = parser.parse(trig);
+//     // Involving an n3 store is just done to ensure uniqueness of all quads
+//     // although this does not really happen in our tests 
+//     return new n3.Store(quads);
+// }
 
 
 

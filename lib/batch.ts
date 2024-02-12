@@ -5,8 +5,7 @@
  */
 import * as utils                           from './utils';
 import { TestEntry, TestResult, Constants } from './types';
-
-import * as _ from 'underscore';
+import * as _                               from 'underscore';
 
 /**
  * In some cases it seems that the number of fetches is limited, and the execution creates exceptions.
