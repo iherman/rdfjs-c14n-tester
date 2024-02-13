@@ -50,16 +50,3 @@ export async function getQuads(trig: string): Promise<Graph> {
     await promisifyEventEmitter(storeEventHandler);
     return store;
 }
-
-
-
-// export function getQuads(trig: string): Graph {    
-//     const parser = new n3.Parser({blankNodePrefix: ''});
-//     const quads: rdf.Quad[] = parser.parse(trig);
-//     // Involving an n3 store is just done to ensure uniqueness of all quads
-//     // although this does not really happen in our tests 
-//     return new n3.Store(quads);
-// }
-
-
-
